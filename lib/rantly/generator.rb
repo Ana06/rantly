@@ -141,12 +141,15 @@ class Rantly
     range(0)
   end
 
-  def float(distribution=nil, center=0)
+  def float(distribution=nil, params={})
     case distribution
     when :normal
+      params[:center] ||= 0
+      params[:scale] ||= 1
+      raise "The distribution scale should be greater than zero" unless params[:scale].positive?
       # Sum of 6 draws from a uniform distribution give as a draw of a normal
       # distribution centered in 3 (central limit theorem).
-      [rand, rand, rand, rand, rand, rand].sum - 3 + center
+      ([rand, rand, rand, rand, rand, rand].sum - 3) * params[:scale] + params[:center]
     else
       rand
     end
