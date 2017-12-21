@@ -57,6 +57,10 @@ describe Rantly::Property do
     property_of { float }.check { |f| assert f.is_a?(Float)}
   end
 
+  it "generate Float with normal distribution" do
+    assert float(:normal, { center: 17 }).between?(16,18)
+  end
+
   it "generate Boolean" do
     property_of { boolean }.check { |t|
       assert t == true || t == false
